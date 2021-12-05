@@ -23,19 +23,13 @@ Output:
 ```html
 <table>
   <td>
-    <img
-      src="https://image.test/uploads/000000000000000000000000000000000000.png"
-    />
+    <img src="https://image.test/uploads/000000000000000000000000000000000000.png" />
   </td>
   <td>
-    <img
-      src="https://image.test/uploads/000000000000000000000000000000000001.png"
-    />
+    <img src="https://image.test/uploads/000000000000000000000000000000000001.png" />
   </td>
   <td>
-    <img
-      src="https://image.test/uploads/000000000000000000000000000000000002.png"
-    />
+    <img src="https://image.test/uploads/000000000000000000000000000000000002.png" />
   </td>
 </table>
 ```
