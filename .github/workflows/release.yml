@@ -1,14 +1,8 @@
 on:
   push:
-    branches:
-      - master
-      - feature/*
-    paths:
-      - 'src/**'
-      - '.github/workflows/**'
-      - 'Cargo.*'
+    tags: ["v*"]
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
