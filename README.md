@@ -23,13 +23,26 @@ Output:
 ```html
 <table>
   <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000000.png" />
+    <img
+      src="https://image.test/uploads/000000000000000000000000000000000000.png"
+    />
   </td>
   <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000001.png" />
+    <img
+      src="https://image.test/uploads/000000000000000000000000000000000001.png"
+    />
   </td>
   <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000002.png" />
+    <img
+      src="https://image.test/uploads/000000000000000000000000000000000002.png"
+    />
   </td>
 </table>
+```
+
+# Install
+
+```
+sudo curl -L https://github.com/acro5piano/md-img-to-table/releases/download/v0.1.0/md-img-to-table -o /usr/local/bin/md-img-to-table
+sudo chmod +x /usr/local/bin/md-img-to-table
 ```
