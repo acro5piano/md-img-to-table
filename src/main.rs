@@ -2,7 +2,7 @@ use regex::Regex;
 use std::io::{self, BufRead};
 
 fn convert(lines: &str) -> String {
-    let re = Regex::new(r"(?P<src>https:.+.png)").unwrap();
+    let re = Regex::new(r"(?P<src>https:.+.(png|jpg|jpeg|mov))").unwrap();
 
     let tds = lines
         .split('\n')
@@ -57,11 +57,15 @@ fn test_main() {
   <td>
     <img src="https://image.test/uploads/000000000000000000000000000000000002.png" />
   </td>
+  <td>
+    <img src="https://image.test/uploads/000000000000000000000000000000000003.mov" />
+  </td>
 </table>"#;
     let fixture = r#"
     ![image.png](https://image.test/uploads/000000000000000000000000000000000000.png =WxH)
     ![image.png](https://image.test/uploads/000000000000000000000000000000000001.png =WxH)
     ![image.png](https://image.test/uploads/000000000000000000000000000000000002.png =WxH)
+    ![image.png](https://image.test/uploads/000000000000000000000000000000000003.mov =WxH)
 "#;
     assert_eq!(convert(&fixture), expected);
 }
