@@ -37,6 +37,6 @@ Output:
 # Install
 
 ```
-sudo curl -L https://github.com/acro5piano/md-img-to-table/releases/download/v0.1.1/md-img-to-table -o /usr/local/bin/md-img-to-table
+sudo curl -L https://github.com/acro5piano/md-img-to-table/releases/download/v0.1.2/md-img-to-table -o /usr/local/bin/md-img-to-table
 sudo chmod +x /usr/local/bin/md-img-to-table
 ```
