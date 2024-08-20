@@ -2,16 +2,17 @@ use regex::Regex;
 use std::io::{self, BufRead};
 
 fn convert(lines: &str) -> String {
-    let re = Regex::new(r"(?P<src>https:.+.(png|jpg|jpeg|mov|mp4|PNG|JPG|JPEG|MOV|MP4))").unwrap();
+    let re = Regex::new(r"!\[.+\]\((?P<src>https://.+?)[ |\)]").expect("Unable to init regex");
 
     let tds = lines
+        .trim()
         .split('\n')
         .map(|line| match re.captures(line) {
             Some(caps) => {
                 format!(
-                    r#"  <td>
-    <img src="{src}" />
-  </td>"#,
+                    r#"    <td>
+      <img src="{src}" />
+    </td>"#,
                     src = &caps["src"]
                 )
             }
@@ -22,7 +23,9 @@ fn convert(lines: &str) -> String {
         .join("\n");
     format!(
         r#"<table>
+  <tr>
 {tds}
+  </tr>
 </table>"#,
         tds = &tds
     )
@@ -30,9 +33,6 @@ fn convert(lines: &str) -> String {
 
 fn main() {
     let stdin = io::stdin();
-    // for line in stdin.lock().lines() {
-    //     println!("{}", line.unwrap());
-    // }
     let lines = stdin
         .lock()
         .lines()
@@ -40,29 +40,31 @@ fn main() {
         .collect::<Vec<String>>()
         .join("\n");
     println!("{}", convert(&lines));
-
-    // let stdin = new TextDecoder().decode(await Deno.readAll(Deno.stdin))
-    // console.log(convert(stdin.trim()))
 }
 
 #[test]
 fn test_main() {
     let expected = r#"<table>
-  <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000000.png" />
-  </td>
-  <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000001.png" />
-  </td>
-  <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000002.png" />
-  </td>
-  <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000003.mov" />
-  </td>
-  <td>
-    <img src="https://image.test/uploads/000000000000000000000000000000000004.MOV" />
-  </td>
+  <tr>
+    <td>
+      <img src="https://image.test/uploads/000000000000000000000000000000000000.png" />
+    </td>
+    <td>
+      <img src="https://image.test/uploads/000000000000000000000000000000000001.png" />
+    </td>
+    <td>
+      <img src="https://image.test/uploads/000000000000000000000000000000000002.png" />
+    </td>
+    <td>
+      <img src="https://image.test/uploads/000000000000000000000000000000000003.mov" />
+    </td>
+    <td>
+      <img src="https://image.test/uploads/000000000000000000000000000000000004.MOV" />
+    </td>
+    <td>
+      <img src="https://image.test/uploads/no-extension-github-new-type" />
+    </td>
+  </tr>
 </table>"#;
     let fixture = r#"
     ![image.png](https://image.test/uploads/000000000000000000000000000000000000.png =WxH)
@@ -70,6 +72,9 @@ fn test_main() {
     ![image.png](https://image.test/uploads/000000000000000000000000000000000002.png =WxH)
     ![image.png](https://image.test/uploads/000000000000000000000000000000000003.mov =WxH)
     ![image.png](https://image.test/uploads/000000000000000000000000000000000004.MOV =WxH)
+    ![image.png](https://image.test/uploads/no-extension-github-new-type)
 "#;
-    assert_eq!(convert(&fixture), expected);
+    let converted = convert(&fixture);
+    println!("{}", &converted); // For debug
+    assert_eq!(converted, expected);
 }
